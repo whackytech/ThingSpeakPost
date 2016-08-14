@@ -30,11 +30,6 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 /**
  *
  * @author WhackyTech
@@ -147,6 +142,7 @@ public class ThingSpeakPostGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    @SuppressWarnings("null")
     private void postButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_postButtonActionPerformed
 
         String url = "http://api.thingspeak.com/update";
@@ -158,17 +154,13 @@ public class ThingSpeakPostGUI extends javax.swing.JFrame {
         List<NameValuePair> urlParameters = new ArrayList<>();
         urlParameters.add(new BasicNameValuePair("key", textAPI.getText())); 
         
-         if (!"".equals(textField1.getText())) {
+        if (!"".equals(textField1.getText())) {
             urlParameters.add(new BasicNameValuePair("field1", textField1.getText()));
-         }
+        }
         
         if (!"".equals(textField2.getText())) {
             urlParameters.add(new BasicNameValuePair("field2", textField2.getText()));
         }
-            
-        //System.out.println(textAPI.getText());
-        //System.out.println(textField1.getText());
-        //System.out.println(textField2.getText());        
 
         try {
             post.setEntity(new UrlEncodedFormEntity(urlParameters));
@@ -192,15 +184,13 @@ public class ThingSpeakPostGUI extends javax.swing.JFrame {
         try {
             rd = new BufferedReader(
                     new InputStreamReader(response.getEntity().getContent()));
-        } catch (IOException ex) {
-            Logger.getLogger(ThingSpeakPostGUI.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnsupportedOperationException ex) {
+        } catch (IOException | UnsupportedOperationException ex) {
             Logger.getLogger(ThingSpeakPostGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         StringBuffer result;
         result = new StringBuffer();
-        String line = "";
+        String line;
         try {
             while ((line = rd.readLine()) != null) {
                 result.append(line);
@@ -238,10 +228,8 @@ public class ThingSpeakPostGUI extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ThingSpeakPostGUI().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new ThingSpeakPostGUI().setVisible(true);
         });
     }
 
